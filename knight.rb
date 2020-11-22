@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 def knight_moves(start, last)
   result = Board.new(start, last)
   result.tree
 end
 
+# This class manages the board and tree generation
 class Board
   attr_accessor :root, :final, :visited, :tree
 
@@ -45,7 +48,7 @@ class Board
   end
 
   def invalid?(var1, var2)
-    var1 < 0 || var1 > 7 || var2 < 0 || var2 > 7
+    var1.negative? || var1 > 7 || var2.negative? || var2 > 7
   end
 
   def moves(arr)
@@ -57,6 +60,7 @@ class Board
   end
 end
 
+# This class creates each cell
 class Node < Board
   attr_accessor :arr, :children, :parent
 
