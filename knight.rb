@@ -17,14 +17,12 @@ class Board
     current = queue[0]
     return trace(current) if current.arr == final
 
-    current.options.each do |item|
-      next if visited.include?(item)
+    current.children.map! { |x| make_node(x) }.each do |item|
+      next if visited.include?(item.arr)
 
-      current_child = make_node(item)
-      current_child.parent = current
-      current.children << current_child
-      queue << current_child
-      visited << current_child.arr
+      item.parent = current
+      queue << item
+      visited << item.arr
     end
     queue.shift
     make_tree(queue)
@@ -60,14 +58,13 @@ class Board
 end
 
 class Node < Board
-  attr_accessor :arr, :children, :options, :parent
+  attr_accessor :arr, :children, :parent
 
   def initialize(arr)
     @arr = arr
-    @children = []
-    @options = moves(arr)
+    @children = moves(arr)
     @parent = nil
   end
 end
 
-p knight_moves([3, 3], [0, 0])
+p knight_moves([0, 0], [7, 7])
